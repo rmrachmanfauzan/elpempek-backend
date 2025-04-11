@@ -8,19 +8,23 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DATABASE_URL=postgres://postgres:secret@db:5432/mydb
+      DATABASE_URL: mysql://root:superadmin@tcp(db:3306)/elpempek
     depends_on:
       - db
 
   db:
-    image: postgres:16-alpine
+    image: mysql:8.0.33
+    container_name: mysql-server
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: mydb
+      MYSQL_ROOT_PASSWORD: superadmin
+      MYSQL_DATABASE: elpempek
+    ports:
+      - "3306:3306"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./mysql_data:/var/lib/mysql   # Persistent local volume
 
-volumes:
-  pgdata:
+# Local named volume (not needed since we're using a bind mount)
+# You can remove this unless you’re using PostgreSQL elsewhere
+# volumes:
+#   pgdata:
