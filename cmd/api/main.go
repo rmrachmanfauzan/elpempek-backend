@@ -1,16 +1,20 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/rmrachmanfauzan/elpempek/internal/handler"
+	"github.com/labstack/echo/v4"
+	"github.com/rmrachmanfauzan/elpempek/internal/router"
 	"github.com/rmrachmanfauzan/elpempek/internal/db"
 )
 
 func main()  {
-	
 	db.InitDB()
-	r := gin.Default()
-	r.GET("/users", handler.GetUsers)
+	db.RunMigrations()
+	
+	e := echo.New()
 
-	r.Run(":8080")
+	// Register all app routes
+	router.RegisterUserRoutes(e, db.DB)
+
+	
+	e.Logger.Fatal(e.Start(":8080"))
 }
