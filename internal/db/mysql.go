@@ -16,7 +16,8 @@ func InitDB() {
 	dsn := os.Getenv("DATABASE_DSN")
 	if dsn == "" {
 		// fallback if env is not set
-		dsn = "root:superadmin@tcp(db:3306)/elpempek?charset=utf8mb4&parseTime=True&loc=Local"
+		// dsn = "root:superadmin@tcp(db:3306)/elpempek?charset=utf8mb4&parseTime=True&loc=Local"
+		dsn = "root:superadmin@tcp(127.0.0.1:3306)/elpempek?charset=utf8mb4&parseTime=True&loc=Local"
 	}
 	var db *gorm.DB	
 	var err error

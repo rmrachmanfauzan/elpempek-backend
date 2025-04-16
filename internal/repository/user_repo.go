@@ -7,7 +7,7 @@ import (
 
 type UserRepository interface {
 	Create(user *model.User) error
-	GetByID(id uint) (*model.User, error)
+	Find(id uint) (*model.User, error)
 }
 
 type userRepository struct {
@@ -22,7 +22,7 @@ func (r *userRepository) Create(user *model.User) error {
 	return r.db.Create(user).Error
 }
 
-func (r *userRepository) GetByID(id uint) (*model.User, error) {
+func (r *userRepository) Find(id uint) (*model.User, error) {
 	var user model.User
 	if err := r.db.First(&user, id).Error; err != nil {
 		return nil, err
